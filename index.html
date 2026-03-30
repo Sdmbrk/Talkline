@@ -8,156 +8,203 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
-  --bg: #0d1208; --surface: #161c0f; --surface2: #1e2716; --border: #384529;
-  --amber: #f5a623; --amber-dim: #7a4e0a; --amber-glow: rgba(245,166,35,0.25);
-  --green: #5cb85c; --red: #e03c3c; --ptt: #ff5500; --ptt-glow: rgba(255,85,0,0.4);
-  --text: #b8cc88; --text-dim: #586640;
-  --mono: 'Share Tech Mono', monospace; --display: 'Orbitron', monospace;
+  --bg:#0d1208; --surface:#161c0f; --surface2:#1e2716; --border:#384529;
+  --amber:#f5a623; --amber-dim:#7a4e0a; --amber-glow:rgba(245,166,35,.25);
+  --green:#5cb85c; --red:#e03c3c; --ptt:#ff5500; --ptt-glow:rgba(255,85,0,.4);
+  --text:#b8cc88; --text-dim:#586640;
+  --mono:'Share Tech Mono',monospace; --disp:'Orbitron',monospace;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--mono);background:var(--bg);color:var(--text);overscroll-behavior:none}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background-image:radial-gradient(ellipse at 20% 50%,rgba(60,90,20,.06) 0%,transparent 60%),
+    linear-gradient(rgba(50,70,20,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(50,70,20,.04) 1px,transparent 1px);
+  background-size:100% 100%,24px 24px,24px 24px}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; font-family: var(--mono); background: var(--bg); color: var(--text); overscroll-behavior: none; }
-body {
-  display: flex; align-items: center; justify-content: center; min-height: 100vh;
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(60,90,20,0.06) 0%, transparent 60%),
-    linear-gradient(rgba(50,70,20,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(50,70,20,0.04) 1px, transparent 1px);
-  background-size: 100% 100%, 24px 24px, 24px 24px;
-}
+@keyframes fadeIn   {from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes blink    {0%,100%{opacity:1}50%{opacity:.18}}
+@keyframes spin     {to{transform:rotate(360deg)}}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.13);opacity:.3}}
+@keyframes slideUp  {from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
 
-@keyframes fadeIn   { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
-@keyframes blink    { 0%,100%{opacity:1} 50%{opacity:0.2} }
-@keyframes spin     { to{transform:rotate(360deg)} }
-@keyframes ringPulse{ 0%,100%{transform:scale(1);opacity:0.9} 50%{transform:scale(1.12);opacity:0.35} }
+/* ── SETUP ───────────────────────────────────────────────────────── */
+#setup{width:100%;max-width:400px;padding:20px;animation:fadeIn .4s ease}
+.logo-wrap{text-align:center;margin-bottom:28px}
+.logo{font-family:var(--disp);font-size:2.5rem;font-weight:900;color:var(--amber);
+  letter-spacing:.18em;text-shadow:0 0 40px rgba(245,166,35,.5),0 0 80px rgba(245,166,35,.2);line-height:1}
+.logo-sub{font-size:.63rem;color:var(--text-dim);letter-spacing:.4em;text-transform:uppercase;margin-top:6px}
 
-/* ── SETUP ─────────────────────────────────────────────────────────────── */
-#setup { width:100%; max-width:400px; padding:20px; animation:fadeIn .4s ease; }
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:2px;
+  padding:18px 20px;margin-bottom:10px;position:relative;overflow:hidden}
+.panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(245,166,35,.3),transparent)}
+.panel-title{font-family:var(--disp);font-size:.55rem;color:var(--text-dim);
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px}
 
-.logo-wrap { text-align:center; margin-bottom:32px; }
-.logo { font-family:var(--display); font-size:2.6rem; font-weight:900; color:var(--amber);
-  letter-spacing:.18em; text-shadow:0 0 40px rgba(245,166,35,.5),0 0 80px rgba(245,166,35,.2); line-height:1; }
-.logo-sub { font-size:.65rem; color:var(--text-dim); letter-spacing:.4em; text-transform:uppercase; margin-top:6px; }
+input[type=text]{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:2px;
+  color:var(--text);font-family:var(--mono);font-size:.95rem;padding:10px 14px;
+  outline:none;margin-bottom:8px;transition:border-color .2s,box-shadow .2s}
+input[type=text]:focus{border-color:var(--amber);box-shadow:0 0 12px var(--amber-glow)}
+input[type=text]::placeholder{color:var(--text-dim)}
+.ch-input{font-size:1.05rem;letter-spacing:.1em}
+.input-hint{font-size:.58rem;color:var(--text-dim);letter-spacing:.07em;margin-top:-4px;margin-bottom:8px}
 
-.panel { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:20px; margin-bottom:12px; position:relative; overflow:hidden; }
-.panel::before { content:''; position:absolute; top:0;left:0;right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(245,166,35,.3),transparent); }
-.panel-title { font-family:var(--display); font-size:.58rem; color:var(--text-dim); letter-spacing:.3em; text-transform:uppercase; margin-bottom:14px; }
+.btn{width:100%;padding:11px;border:none;border-radius:2px;font-family:var(--disp);
+  font-size:.7rem;font-weight:700;letter-spacing:.16em;cursor:pointer;transition:all .15s;text-transform:uppercase}
+.btn:disabled{opacity:.4;cursor:default}
+.btn-primary{background:var(--amber);color:#0d1208}
+.btn-primary:hover:not(:disabled){background:#ffb830;box-shadow:0 0 20px var(--amber-glow)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:7px}
+.btn-secondary:hover:not(:disabled){border-color:var(--amber);color:var(--amber)}
+.btn-primary:active,.btn-secondary:active{transform:scale(.97)}
+.or-div{text-align:center;color:var(--text-dim);font-size:.68rem;letter-spacing:.28em;margin:3px 0}
 
-input[type="text"] {
-  width:100%; background:var(--bg); border:1px solid var(--border); border-radius:2px;
-  color:var(--text); font-family:var(--mono); font-size:1rem; padding:10px 14px;
-  outline:none; margin-bottom:10px; transition:border-color .2s,box-shadow .2s;
-}
-input[type="text"]:focus { border-color:var(--amber); box-shadow:0 0 12px var(--amber-glow); }
-input[type="text"]::placeholder { color:var(--text-dim); }
-.ch-input { font-size:1.1rem; letter-spacing:.1em; }
-.input-hint { font-size:.6rem; color:var(--text-dim); letter-spacing:.08em; margin-top:-6px; margin-bottom:10px; }
+.saved-profile{background:var(--surface2);border:1px solid var(--amber-dim);border-radius:2px;
+  padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;
+  cursor:pointer;transition:border-color .15s}
+.saved-profile:hover{border-color:var(--amber)}
+.sp-info{flex:1}
+.sp-name{font-size:.88rem;color:var(--amber)}
+.sp-ch{font-size:.6rem;color:var(--text-dim);letter-spacing:.1em;margin-top:2px}
 
-.btn { width:100%; padding:12px; border:none; border-radius:2px; font-family:var(--display); font-size:.72rem; font-weight:700; letter-spacing:.18em; cursor:pointer; transition:all .15s; text-transform:uppercase; }
-.btn:disabled { opacity:.45; cursor:default; }
-.btn-primary  { background:var(--amber); color:#0d1208; }
-.btn-primary:hover:not(:disabled) { background:#ffc040; box-shadow:0 0 24px var(--amber-glow); }
-.btn-secondary{ background:var(--surface2); color:var(--text); border:1px solid var(--border); margin-top:8px; }
-.btn-secondary:hover:not(:disabled) { border-color:var(--amber); color:var(--amber); }
-.btn-primary:active:not(:disabled), .btn-secondary:active:not(:disabled) { transform:scale(.98); }
+/* ── CONNECTING OVERLAY ──────────────────────────────────────────── */
+#overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:200;
+  flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.spin-ring{width:46px;height:46px;border:2px solid var(--border);
+  border-top-color:var(--amber);border-radius:50%;animation:spin .75s linear infinite}
+.ov-title{font-family:var(--disp);font-size:.72rem;color:var(--amber);
+  letter-spacing:.25em;animation:blink 1s infinite}
+.ov-sub{font-size:.6rem;color:var(--text-dim);letter-spacing:.1em;text-align:center;max-width:260px;line-height:1.8}
+.ov-btn{margin-top:6px;padding:9px 22px;width:auto;font-size:.62rem}
 
-.or-div { text-align:center; color:var(--text-dim); font-size:.7rem; letter-spacing:.3em; margin:4px 0; }
+/* ── APP ─────────────────────────────────────────────────────────── */
+#app{display:none;width:100%;max-width:460px;padding:12px;
+  flex-direction:column;gap:9px;max-height:100vh;overflow-y:auto;animation:fadeIn .35s ease}
 
-/* saved profile */
-.saved-profile { background:var(--surface2); border:1px solid var(--amber-dim); border-radius:2px; padding:10px 14px; margin-bottom:10px; display:flex; align-items:center; gap:10px; cursor:pointer; transition:border-color .15s; }
-.saved-profile:hover { border-color:var(--amber); }
-.sp-info { flex:1; }
-.sp-name { font-size:.9rem; color:var(--amber); }
-.sp-ch   { font-size:.62rem; color:var(--text-dim); letter-spacing:.1em; margin-top:2px; }
-.sp-arrow{ color:var(--text-dim); font-size:1.1rem; }
+/* header */
+.app-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:2px}
+.app-logo{font-family:var(--disp);font-size:.95rem;font-weight:900;color:var(--amber);letter-spacing:.14em}
+.st-row{display:flex;align-items:center;gap:6px;font-size:.62rem;color:var(--text-dim);letter-spacing:.12em}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
+.dot.warn{background:var(--amber);box-shadow:0 0 8px var(--amber);animation:blink .7s infinite}
+.dot.err{background:var(--red);box-shadow:0 0 8px var(--red)}
 
-/* ── CONNECTING ─────────────────────────────────────────────────────────── */
-#connecting { display:none; position:fixed; inset:0; background:var(--bg); z-index:100; flex-direction:column; align-items:center; justify-content:center; gap:18px; }
-.spin-ring { width:48px;height:48px; border:2px solid var(--border); border-top-color:var(--amber); border-radius:50%; animation:spin .8s linear infinite; }
-.conn-title { font-family:var(--display); font-size:.72rem; color:var(--amber); letter-spacing:.25em; animation:blink 1s infinite; }
-.conn-sub   { font-size:.62rem; color:var(--text-dim); letter-spacing:.1em; }
+/* room bar */
+.room-bar{background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.room-top{display:flex;align-items:center}
+.room-info{flex:1;padding:9px 14px}
+.rl{font-size:.52rem;color:var(--text-dim);letter-spacing:.28em;text-transform:uppercase;margin-bottom:3px}
+.rc{font-family:var(--disp);font-size:1.15rem;font-weight:700;color:var(--amber);
+  letter-spacing:.12em;word-break:break-all}
+.copy-btn{padding:0 14px;min-height:52px;background:var(--surface2);border:none;
+  border-left:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);
+  font-size:.65rem;cursor:pointer;transition:all .15s;white-space:nowrap;
+  display:flex;align-items:center;gap:5px}
+.copy-btn:hover{color:var(--amber)}
+.copy-btn.ok{color:var(--green)}
+.room-bot{padding:4px 14px 7px;font-size:.57rem;color:var(--text-dim);
+  letter-spacing:.1em;border-top:1px solid var(--border);display:flex;
+  align-items:center;justify-content:space-between}
+.reconnect-btn{background:none;border:1px solid var(--red);border-radius:2px;
+  color:var(--red);font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;
+  padding:2px 8px;cursor:pointer;transition:all .15s}
+.reconnect-btn:hover{background:var(--red);color:var(--bg)}
 
-/* ── APP ────────────────────────────────────────────────────────────────── */
-#app { display:none; width:100%; max-width:460px; padding:14px; flex-direction:column; gap:10px; max-height:100vh; overflow-y:auto; animation:fadeIn .3s ease; }
+/* tabs */
+.ch-tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.ch-tab{flex:1;padding:8px 4px;border:none;background:none;font-family:var(--mono);
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);
+  cursor:pointer;transition:all .15s;border-bottom:2px solid transparent}
+.ch-tab.active{color:var(--amber);background:var(--surface2);border-bottom-color:var(--amber)}
 
-.app-header { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; background:var(--surface); border:1px solid var(--border); border-radius:2px; }
-.app-logo   { font-family:var(--display); font-size:1rem; font-weight:900; color:var(--amber); letter-spacing:.14em; }
-.status-row { display:flex; align-items:center; gap:6px; font-size:.65rem; color:var(--text-dim); letter-spacing:.12em; }
-.sdot       { width:7px;height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); flex-shrink:0; }
-.sdot.warn  { background:var(--amber); box-shadow:0 0 8px var(--amber); animation:blink .8s infinite; }
-.sdot.err   { background:var(--red);   box-shadow:0 0 8px var(--red); }
+/* members */
+.mbx{background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.mbx-hdr{display:flex;justify-content:space-between;align-items:center;
+  padding:7px 13px;border-bottom:1px solid var(--border);
+  font-size:.55rem;color:var(--text-dim);letter-spacing:.22em;text-transform:uppercase}
+.mbx-list{max-height:185px;overflow-y:auto}
+.mrow{display:flex;align-items:center;gap:10px;padding:8px 13px;cursor:pointer;
+  transition:background .1s;border-bottom:1px solid rgba(56,69,41,.3);position:relative;
+  animation:slideUp .2s ease}
+.mrow:last-child{border-bottom:none}
+.mrow:hover{background:var(--surface2)}
+.mrow.sel{background:var(--surface2);border-left:2px solid var(--amber)}
+.av{width:29px;height:29px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface2);display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;color:var(--amber);flex-shrink:0;position:relative}
+.avr{position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--ptt);
+  opacity:0;transition:opacity .15s}
+.mrow.tx .avr{opacity:1;animation:ringPulse .6s ease-in-out infinite}
+.mn{flex:1;font-size:.8rem}
+.mtag{font-size:.57rem;color:var(--text-dim);letter-spacing:.1em}
+.mtx{font-size:.57rem;color:var(--ptt);letter-spacing:.12em;animation:blink .45s infinite}
+.empty{padding:18px;text-align:center;color:var(--text-dim);font-size:.7rem;
+  letter-spacing:.1em;line-height:1.9}
 
-.room-bar   { background:var(--surface); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-.room-inner { display:flex; align-items:center; }
-.room-info  { flex:1; padding:10px 16px; }
-.room-label { font-size:.55rem; color:var(--text-dim); letter-spacing:.3em; text-transform:uppercase; margin-bottom:3px; }
-.room-code  { font-family:var(--display); font-size:1.2rem; font-weight:700; color:var(--amber); letter-spacing:.1em; word-break:break-all; }
-.copy-btn   { padding:0 16px; min-height:56px; background:var(--surface2); border:none; border-left:1px solid var(--border); color:var(--text-dim); font-family:var(--mono); font-size:.68rem; cursor:pointer; transition:all .15s; white-space:nowrap; display:flex; align-items:center; gap:5px; }
-.copy-btn:hover { color:var(--amber); }
-.copy-btn.ok    { color:var(--green); }
-.room-slot  { padding:5px 16px 8px; font-size:.6rem; color:var(--text-dim); letter-spacing:.1em; border-top:1px solid var(--border); }
+/* controls */
+.ctrl-row{display:flex;gap:9px;align-items:stretch}
+.vox-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:2px;
+  padding:9px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;
+  user-select:none;transition:border-color .15s}
+.vox-card.on{border-color:var(--amber-dim)}
+.sw{width:32px;height:16px;background:var(--bg);border:1px solid var(--border);
+  border-radius:8px;position:relative;flex-shrink:0;transition:background .2s}
+.swk{position:absolute;top:2px;left:2px;width:10px;height:10px;
+  background:var(--text-dim);border-radius:50%;transition:all .2s}
+.vox-card.on .sw{background:var(--amber-dim)}
+.vox-card.on .swk{left:18px;background:var(--amber)}
+.vox-lbl{font-size:.62rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase}
+.vox-card.on .vox-lbl{color:var(--amber)}
 
-.channel-tabs { display:flex; background:var(--surface); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-.ch-tab { flex:1; padding:9px 6px; border:none; background:none; font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; transition:all .15s; border-bottom:2px solid transparent; }
-.ch-tab.active { color:var(--amber); background:var(--surface2); border-bottom-color:var(--amber); }
+.lvl{background:var(--surface);border:1px solid var(--border);border-radius:2px;
+  padding:9px 11px;display:flex;align-items:center;gap:3px}
+.lb{width:4px;height:4px;background:var(--border);border-radius:1px;
+  transition:height .05s,background .07s}
 
-.members-box  { background:var(--surface); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-.box-header   { display:flex; justify-content:space-between; align-items:center; padding:8px 14px; border-bottom:1px solid var(--border); font-size:.58rem; color:var(--text-dim); letter-spacing:.25em; text-transform:uppercase; }
-.members-list { max-height:190px; overflow-y:auto; }
-.member-row   { display:flex; align-items:center; gap:10px; padding:9px 14px; cursor:pointer; transition:background .1s; border-bottom:1px solid rgba(56,69,41,.3); position:relative; }
-.member-row:last-child { border-bottom:none; }
-.member-row:hover { background:var(--surface2); }
-.member-row.sel   { background:var(--surface2); border-left:2px solid var(--amber); }
-.avatar  { width:30px;height:30px; border-radius:50%; border:1px solid var(--border); background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:.8rem; color:var(--amber); flex-shrink:0; position:relative; }
-.av-ring { position:absolute; inset:-3px; border-radius:50%; border:2px solid var(--ptt); opacity:0; transition:opacity .15s; }
-.member-row.tx .av-ring { opacity:1; animation:ringPulse .6s ease-in-out infinite; }
-.m-name { flex:1; font-size:.82rem; }
-.m-tag  { font-size:.6rem; color:var(--text-dim); letter-spacing:.1em; }
-.m-tx   { font-size:.6rem; color:var(--ptt); letter-spacing:.12em; animation:blink .5s infinite; }
-.empty-state { padding:20px; text-align:center; color:var(--text-dim); font-size:.72rem; letter-spacing:.1em; line-height:1.8; }
+/* PTT */
+.ptt-zone{background:var(--surface);border:1px solid var(--border);border-radius:2px;
+  padding:18px 12px 22px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.ptt-meta{font-size:.57rem;color:var(--text-dim);letter-spacing:.25em;text-transform:uppercase}
+.ptt-tgt{font-family:var(--disp);font-size:.73rem;color:var(--amber);
+  letter-spacing:.14em;min-height:1.2em;text-align:center}
+.tx-badge{font-family:var(--disp);font-size:.62rem;color:var(--ptt);
+  letter-spacing:.28em;text-shadow:0 0 12px var(--ptt);opacity:0;
+  transition:opacity .1s;min-height:1em}
+.tx-badge.on{opacity:1;animation:blink .38s infinite}
 
-.ctrl-row { display:flex; gap:10px; align-items:stretch; }
-.vox-card { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:10px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none; transition:border-color .15s; }
-.vox-card.on { border-color:var(--amber-dim); }
-.sw      { width:34px;height:17px; background:var(--bg); border:1px solid var(--border); border-radius:9px; position:relative; flex-shrink:0; transition:background .2s; }
-.sw-knob { position:absolute; top:2px;left:2px; width:11px;height:11px; background:var(--text-dim); border-radius:50%; transition:all .2s; }
-.vox-card.on .sw      { background:var(--amber-dim); }
-.vox-card.on .sw-knob { left:19px; background:var(--amber); }
-.vox-label { font-size:.65rem; color:var(--text-dim); letter-spacing:.12em; text-transform:uppercase; }
-.vox-card.on .vox-label { color:var(--amber); }
-
-.level-meter { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:10px 12px; display:flex; align-items:center; gap:3px; }
-.lb { width:4px;height:4px; background:var(--border); border-radius:1px; transition:height .05s,background .08s; }
-
-.ptt-zone { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:20px 14px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.ptt-meta   { font-size:.6rem; color:var(--text-dim); letter-spacing:.25em; text-transform:uppercase; }
-.ptt-target { font-family:var(--display); font-size:.75rem; color:var(--amber); letter-spacing:.15em; min-height:1.2em; text-align:center; }
-.tx-badge   { font-family:var(--display); font-size:.65rem; color:var(--ptt); letter-spacing:.3em; text-shadow:0 0 12px var(--ptt); opacity:0; transition:opacity .1s; min-height:1em; }
-.tx-badge.on{ opacity:1; animation:blink .4s infinite; }
-
-.ptt-btn {
-  width:150px;height:150px; border-radius:50%; border:3px solid var(--border);
-  background:radial-gradient(circle at 38% 35%, var(--surface2), var(--bg) 80%);
-  cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:8px; user-select:none; -webkit-user-select:none; touch-action:none; position:relative;
+.ptt-btn{width:148px;height:148px;border-radius:50%;border:3px solid var(--border);
+  background:radial-gradient(circle at 38% 35%,var(--surface2),var(--bg) 80%);
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:7px;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;
   transition:all .08s;
-  box-shadow:0 6px 30px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04),inset 0 -2px 6px rgba(0,0,0,.4);
-}
-.ptt-btn::before { content:''; position:absolute; inset:-10px; border-radius:50%; border:1px solid rgba(245,166,35,.08); transition:border-color .1s; }
-.ptt-btn::after  { content:''; position:absolute; inset:-20px; border-radius:50%; border:1px solid rgba(245,166,35,.04); }
-.ptt-btn.live { border-color:var(--ptt); background:radial-gradient(circle at 38% 35%,#281200,#150800 80%);
-  box-shadow:0 0 50px var(--ptt-glow),0 0 100px rgba(255,85,0,.15),inset 0 2px 6px rgba(0,0,0,.5); transform:scale(.96); }
-.ptt-btn.live::before { border-color:rgba(255,85,0,.3); }
-.ptt-icon { font-size:2.8rem; line-height:1; pointer-events:none; }
-.ptt-hint { font-family:var(--display); font-size:.52rem; letter-spacing:.22em; color:var(--text-dim); pointer-events:none; text-transform:uppercase; }
-.ptt-btn.live .ptt-hint { color:var(--ptt); }
+  box-shadow:0 6px 28px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04),inset 0 -2px 6px rgba(0,0,0,.4)}
+.ptt-btn::before{content:'';position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid rgba(245,166,35,.08);transition:border-color .1s}
+.ptt-btn::after{content:'';position:absolute;inset:-20px;border-radius:50%;
+  border:1px solid rgba(245,166,35,.04)}
+.ptt-btn.live{border-color:var(--ptt);
+  background:radial-gradient(circle at 38% 35%,#281200,#150800 80%);
+  box-shadow:0 0 50px var(--ptt-glow),0 0 100px rgba(255,85,0,.15),inset 0 2px 6px rgba(0,0,0,.5);
+  transform:scale(.96)}
+.ptt-btn.live::before{border-color:rgba(255,85,0,.3)}
+.ptt-icon{font-size:2.7rem;line-height:1;pointer-events:none}
+.ptt-hint{font-family:var(--disp);font-size:.5rem;letter-spacing:.22em;
+  color:var(--text-dim);pointer-events:none;text-transform:uppercase}
+.ptt-btn.live .ptt-hint{color:var(--ptt)}
 
-.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(70px); background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:9px 18px; border-radius:2px; font-size:.78rem; letter-spacing:.08em; transition:transform .3s cubic-bezier(.34,1.56,.64,1); z-index:999; white-space:nowrap; pointer-events:none; }
-.toast.show { transform:translateX(-50%) translateY(0); }
+/* toast */
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:2px;font-size:.75rem;letter-spacing:.08em;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);z-index:999;
+  white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
 
-::-webkit-scrollbar       { width:4px; }
-::-webkit-scrollbar-track { background:var(--bg); }
-::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 </style>
 </head>
 <body>
@@ -175,69 +222,74 @@ input[type="text"]::placeholder { color:var(--text-dim); }
   </div>
   <div class="panel">
     <div class="panel-title">Channel Name</div>
-    <input type="text" id="ch-input" class="ch-input" placeholder="e.g. myteam, office, alpha…" maxlength="24"
-      oninput="this.value=this.value.replace(/[^a-zA-Z0-9_-]/g,'').toLowerCase()">
-      <button class="btn btn-primary" onclick="launch()">📡 Enter Channel</button>
-    <button class="btn btn-secondary" onclick="genName()">🎲 Random Channel Name</button>
+    <input type="text" id="ch-inp" class="ch-input" placeholder="e.g. myteam, office, alpha…"
+      maxlength="28" oninput="this.value=this.value.replace(/[^a-zA-Z0-9_-]/g,'').toLowerCase()">
+    <div class="input-hint">Any word your whole team agrees on. It never expires.</div>
+    <button class="btn btn-primary" onclick="doLaunch()">📡 Enter Channel</button>
+    <button class="btn btn-secondary" onclick="genName()">🎲 Random Name</button>
   </div>
 </div>
 
-<!-- CONNECTING -->
-<div id="connecting">
-  <div class="spin-ring"></div>
-  <div class="conn-title" id="conn-title">CONNECTING</div>
-  <div class="conn-sub"   id="conn-sub">Joining channel…</div>
+<!-- OVERLAY -->
+<div id="overlay">
+  <div class="spin-ring" id="ov-spinner"></div>
+  <div class="ov-title" id="ov-title">CONNECTING</div>
+  <div class="ov-sub"   id="ov-sub">Reaching PeerJS broker…</div>
+  <button class="btn btn-secondary ov-btn" id="ov-cancel" onclick="cancelConnect()">Cancel</button>
 </div>
 
 <!-- APP -->
 <div id="app">
-  <div class="app-header">
+  <div class="app-hdr">
     <div class="app-logo">TALKLINE</div>
-    <div class="status-row">
-      <div class="sdot warn" id="sdot"></div>
-      <span id="stext">ONLINE</span>
+    <div class="st-row">
+      <div class="dot warn" id="sdot"></div>
+      <span id="stxt">ONLINE</span>
     </div>
   </div>
 
   <div class="room-bar">
-    <div class="room-inner">
+    <div class="room-top">
       <div class="room-info">
-        <div class="room-label">Channel</div>
-        <div class="room-code" id="r-code">──</div>
+        <div class="rl">Channel</div>
+        <div class="rc" id="rc">──</div>
       </div>
-      <button class="copy-btn" id="copy-btn" onclick="copyLink()">📋 Invite</button>
+      <button class="copy-btn" id="copy-btn" onclick="copyInvite()">📋 Invite</button>
     </div>
-    <div class="room-slot" id="slot-info">Slot ─ / 8</div>
+    <div class="room-bot">
+      <span id="peer-id-short">ID ──</span>
+      <button class="reconnect-btn" id="re-btn" style="display:none" onclick="doReconnect()">⟳ RECONNECT</button>
+    </div>
   </div>
 
-  <div class="channel-tabs">
+  <div class="ch-tabs">
     <button class="ch-tab active" id="tab-grp" onclick="setMode('group')">📢 Group</button>
     <button class="ch-tab"        id="tab-ind" onclick="setMode('individual')">👤 Individual</button>
   </div>
 
-  <div class="members-box">
-    <div class="box-header">
+  <div class="mbx">
+    <div class="mbx-hdr">
       <span>Active Members</span>
-      <span id="m-count">1 online</span>
+      <span id="mcnt">1 online</span>
     </div>
-    <div class="members-list" id="m-list"></div>
+    <div class="mbx-list" id="mlist"></div>
   </div>
 
   <div class="ctrl-row">
     <div class="vox-card" id="vox-card" onclick="toggleVox()">
-      <div class="sw"><div class="sw-knob"></div></div>
-      <span class="vox-label">VOX Mode</span>
+      <div class="sw"><div class="swk"></div></div>
+      <span class="vox-lbl">VOX Mode</span>
     </div>
-    <div class="level-meter">
-      <div class="lb" id="lb0"></div><div class="lb" id="lb1"></div><div class="lb" id="lb2"></div>
-      <div class="lb" id="lb3"></div><div class="lb" id="lb4"></div>
+    <div class="lvl" id="lvl">
+      <div class="lb" id="lb0"></div><div class="lb" id="lb1"></div>
+      <div class="lb" id="lb2"></div><div class="lb" id="lb3"></div><div class="lb" id="lb4"></div>
     </div>
   </div>
 
   <div class="ptt-zone">
     <div class="ptt-meta">Transmit To</div>
-    <div class="ptt-target" id="ptt-target">📢 ALL MEMBERS</div>
-    <div class="tx-badge"   id="tx-badge">◉ TRANSMITTING</div>
+    <div class="ptt-tgt"  id="ptt-tgt">📢 ALL MEMBERS</div>
+    <div class="tx-badge" id="txbadge">◉ TRANSMITTING</div>
     <div class="ptt-btn" id="ptt-btn"
       onmousedown="pttDown(event)" onmouseup="pttUp(event)" onmouseleave="pttUp(event)"
       ontouchstart="pttDown(event)" ontouchend="pttUp(event)" ontouchcancel="pttUp(event)">
@@ -251,483 +303,596 @@ input[type="text"]::placeholder { color:var(--text-dim); }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════════════════
-//  CONFIG
-// ═══════════════════════════════════════════════════════════════════
-const MAX_SLOTS  = 8;
-const PREFIX     = 'tlv3';        // bump prefix avoids old-id collisions
-const SCAN_MS    = 9000;
-const LS_KEY     = 'talkline_v2';
-const ADJECTIVES = ['alpha','bravo','charlie','delta','echo','foxtrot','golf','hotel','india','juliet'];
-const NUMBERS    = ['one','two','three','four','five','six','seven','eight'];
+// ═══════════════════════════════════════════════════════════════════════════
+//  ARCHITECTURE:
+//  Every user gets a RANDOM peer ID → zero ID conflicts, no "peer unavailable"
+//  Discovery via a shared "rendezvous" slot: tlv4-{channel}-rdv
+//    · First user claims the rdv slot
+//    · Subsequent users connect to rdv, receive the peer list, connect to all
+//    · Every user also accepts incoming connections (mesh)
+//    · If rdv holder disconnects, next user scans & claims it
+//    · Additionally: periodic mesh scan keeps connections alive
+// ═══════════════════════════════════════════════════════════════════════════
 
-// ═══════════════════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════════════════
-let myName = '', roomCode = '', mySlot = -1;
-let myPeer = null;
-// slot index → { name, dc, oc, ic, audioEl, speaking, speakT }
-const peers = {};
+const PREFIX   = 'tlv4';
+const RDV_SFX  = 'rdv';
+const LS_KEY   = 'talkline_v3';
+const SCAN_MS  = 10000;
+const WORDS_A  = ['alpha','bravo','charlie','delta','echo','foxtrot','golf','hotel'];
+const WORDS_N  = ['one','two','three','four','five','six','seven','eight'];
 
-let localStream = null, silentStream = null, audioCtx = null, analyser = null;
-let voxOn = false, talking = false, selSlot = null, voxHoldT = null;
-let scanInterval = null, meterRunning = false;
+// ── STATE ──────────────────────────────────────────────────────────────────
+let myName='', myChannel='', myPeerId='';
+let peer=null, rdvPeer=null;
+let iAmRdv=false;
 
-const BARS = [0,1,2,3,4].map(i => document.getElementById('lb'+i));
+// peerId → { name, dc, oc, ic, audioEl, speaking, speakT }
+const conns = {};
 
-// ═══════════════════════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════════════════════
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const slotId = (code, n) => `${PREFIX}-${code.toLowerCase()}-s${n}`;
+let localStream=null, silentStream=null, audioCtx=null, analyser=null;
+let voxOn=false, talking=false, selPeer=null;
+let voxHoldT=null, scanT=null, meterRunning=false;
+let cancelRequested=false;
+
+const BARS = [0,1,2,3,4].map(i=>document.getElementById('lb'+i));
+
+// ── UTILS ──────────────────────────────────────────────────────────────────
+const esc = s => String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const rndHex = n => Array.from({length:n},()=>Math.floor(Math.random()*16).toString(16)).join('');
+const rdvId  = ch => `${PREFIX}-${ch}-${RDV_SFX}`;
 
 let _toastT;
-function toast(msg, dur=3000) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  clearTimeout(_toastT);
-  _toastT = setTimeout(() => el.classList.remove('show'), dur);
+function toast(msg, dur=3200) {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(_toastT); _toastT=setTimeout(()=>el.classList.remove('show'),dur);
 }
 
-function setStatus(text, state='ok') {
-  document.getElementById('stext').textContent = text;
-  document.getElementById('sdot').className = 'sdot' + (state==='ok' ? '' : state==='warn' ? ' warn' : ' err');
+function setStatus(txt, state='ok') {
+  document.getElementById('stxt').textContent=txt;
+  document.getElementById('sdot').className='dot'+(state==='ok'?'':state==='warn'?' warn':' err');
+  document.getElementById('re-btn').style.display=(state==='err')?'block':'none';
 }
 
-function setConn(title, sub) {
-  document.getElementById('conn-title').textContent = title;
-  document.getElementById('conn-sub').textContent   = sub;
+function setOv(title,sub,showCancel=true) {
+  document.getElementById('ov-title').textContent=title;
+  document.getElementById('ov-sub').textContent=sub;
+  document.getElementById('ov-cancel').style.display=showCancel?'block':'none';
 }
 
 function genName() {
-  const a = ADJECTIVES[Math.floor(Math.random()*ADJECTIVES.length)];
-  const n = NUMBERS   [Math.floor(Math.random()*NUMBERS.length)];
-  document.getElementById('ch-input').value = a + n;
+  document.getElementById('ch-inp').value =
+    WORDS_A[Math.floor(Math.random()*WORDS_A.length)] +
+    WORDS_N[Math.floor(Math.random()*WORDS_N.length)];
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  SAVED PROFILE
-// ═══════════════════════════════════════════════════════════════════
+// ── SAVED PROFILE ──────────────────────────────────────────────────────────
 function loadSaved() {
   try {
-    const d = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-    if (!d || !d.name || !d.channel) return;
-    document.getElementById('uname').value    = d.name;
-    document.getElementById('ch-input').value = d.channel;
-    const box = document.getElementById('saved-box');
-    box.innerHTML = `<div class="saved-profile" onclick="launch()">
+    const d=JSON.parse(localStorage.getItem(LS_KEY)||'null');
+    if (!d||!d.name||!d.ch) return;
+    document.getElementById('uname').value = d.name;
+    document.getElementById('ch-inp').value = d.ch;
+    const box=document.getElementById('saved-box');
+    box.innerHTML=`<div class="saved-profile" onclick="doLaunch()">
       <div class="sp-info">
         <div class="sp-name">${esc(d.name)}</div>
-        <div class="sp-ch">📡 ${esc(d.channel)}</div>
-      </div><div class="sp-arrow">▶ Quick Join</div>
+        <div class="sp-ch">📡 ${esc(d.ch)}</div>
+      </div><div style="color:var(--amber);font-size:.75rem">▶ Quick Join</div>
     </div>`;
-  } catch(e) {}
+  } catch(e){}
 }
+function saveProfile(n,ch){ try{localStorage.setItem(LS_KEY,JSON.stringify({name:n,ch}))}catch(e){} }
 
-function saveProfile(name, ch) {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ name, channel: ch })); } catch(e) {}
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  LAUNCH
-// ═══════════════════════════════════════════════════════════════════
-async function launch() {
+// ── LAUNCH ─────────────────────────────────────────────────────────────────
+async function doLaunch() {
   const name = document.getElementById('uname').value.trim();
-  const ch   = document.getElementById('ch-input').value.trim().toLowerCase().replace(/[^a-z0-9_-]/g,'');
-  if (!name) { toast('⚠️ Enter your callsign first'); return; }
+  const ch   = document.getElementById('ch-inp').value.trim().toLowerCase().replace(/[^a-z0-9_-]/g,'');
+  if (!name) { toast('⚠️ Enter your callsign'); return; }
   if (!ch)   { toast('⚠️ Enter a channel name'); return; }
-  myName = name; roomCode = ch;
-  saveProfile(name, ch);
+  myName=name; myChannel=ch;
+  saveProfile(name,ch);
+  cancelRequested=false;
 
-  document.getElementById('setup').style.display = 'none';
-  document.getElementById('connecting').style.display = 'flex';
-  setConn('JOINING', `Channel: ${ch}…`);
+  document.getElementById('setup').style.display='none';
+  document.getElementById('overlay').style.display='flex';
+  setOv('CONNECTING','Reaching network broker…');
 
-  await claimSlot();
+  await connectWithRetry();
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  SLOT CLAIM — the fix: no host, just claim first free slot
-// ═══════════════════════════════════════════════════════════════════
-async function claimSlot() {
-  for (let attempt = 0; attempt < 3; attempt++) {          // up to 3 full passes
-    for (let i = 0; i < MAX_SLOTS; i++) {
-      setConn('JOINING', `Trying slot ${i+1} of ${MAX_SLOTS}…`);
-      const id  = slotId(roomCode, i);
-      const res = await tryOpen(id);
+function cancelConnect() {
+  cancelRequested=true;
+  cleanup();
+  document.getElementById('overlay').style.display='none';
+  document.getElementById('setup').style.display='block';
+}
 
-      if (res === 'ok') {
-        mySlot = i;
-        myPeer = window.__claimedPeer;
-        window.__claimedPeer = null;
-        startApp();
-        return;
-      }
-      // 'taken' or timeout → try next slot
+async function connectWithRetry(attempt=0) {
+  if (cancelRequested) return;
+
+  setOv('CONNECTING', attempt===0 ? 'Registering your device…' : `Retry ${attempt}/5 — reconnecting…`);
+
+  // Create a peer with RANDOM ID — never conflicts
+  const id = `${PREFIX}-${myChannel}-u-${rndHex(8)}`;
+
+  try {
+    await openPeer(id);
+  } catch(e) {
+    if (cancelRequested) return;
+    if (attempt < 5) {
+      setOv('RETRYING', `Attempt ${attempt+1} failed. Trying again…`);
+      await sleep(2000 + attempt*800);
+      return connectWithRetry(attempt+1);
     }
-    if (attempt < 2) {
-      setConn('RETRYING', 'Waiting for a free slot…');
-      await sleep(2000);
-    }
+    setOv('FAILED', 'Cannot reach the network. Check your connection.', true);
+    return;
   }
-  toast('⚠️ Channel full (8 users). Please try again later.');
-  document.getElementById('connecting').style.display = 'none';
-  document.getElementById('setup').style.display = 'block';
-}
 
-function tryOpen(id) {
-  return new Promise(resolve => {
-    let done = false;
-    const fin = v => { if (!done) { done = true; resolve(v); } };
-    const p = new Peer(id, { debug: 0 });
-    p.on('open', () => { window.__claimedPeer = p; fin('ok'); });
-    p.on('error', err => {
-      p.destroy();
-      fin( (err.type === 'unavailable-id' || err.type === 'peer-unavailable') ? 'taken' : 'error' );
-    });
-    setTimeout(() => { if (!done) { p.destroy(); fin('taken'); } }, 7000);
-  });
-}
+  if (cancelRequested) { cleanup(); return; }
 
-// ═══════════════════════════════════════════════════════════════════
-//  APP INIT
-// ═══════════════════════════════════════════════════════════════════
-function startApp() {
-  document.getElementById('connecting').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  document.getElementById('r-code').textContent   = roomCode;
-  document.getElementById('slot-info').textContent = `Slot ${mySlot+1} / ${MAX_SLOTS}`;
-  setStatus('ONLINE', 'ok');
+  // Peer is open — now show the app
+  myPeerId = id;
+  document.getElementById('overlay').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('rc').textContent=myChannel;
+  document.getElementById('peer-id-short').textContent='ID ' + id.slice(-6).toUpperCase();
+  setStatus('ONLINE','ok');
   renderMembers();
 
-  // Incoming data connections
-  myPeer.on('connection', dc => {
-    const sn = parseSlot(dc.peer);
-    if (sn === null) return;
-    dc.on('open',  () => {
-      ensure(sn).dc = dc;
-      trySend(sn, { type: 'hello', name: myName });
-    });
-    dc.on('data',  d  => onMsg(sn, d));
-    dc.on('close', () => dropPeer(sn));
-    dc.on('error', () => dropPeer(sn));
-  });
-
-  // Incoming calls
-  myPeer.on('call', call => {
-    call.answer(getSilent());
-    const sn = parseSlot(call.peer);
-    if (sn === null) return;
-    ensure(sn).ic = call;
-    call.on('stream', s => attachAudio(sn, s));
-    call.on('close',  () => { if (peers[sn]) peers[sn].ic = null; });
-  });
-
-  myPeer.on('disconnected', () => {
-    setStatus('RECONNECTING', 'warn');
-    setTimeout(() => { try { myPeer.reconnect(); } catch(e) {} }, 1500);
-  });
-
-  myPeer.on('error', err => {
-    if (err.type === 'peer-unavailable') return; // empty slot — normal, ignore
-    setStatus('ERROR', 'err');
-    toast('⚠️ ' + err.type);
-  });
-
+  setupPeerHandlers();
   initAudio();
-  scanPeers();
-  scanInterval = setInterval(scanPeers, SCAN_MS);
+
+  // Connect to the channel via the rendezvous point
+  setOv('','');
+  await joinChannel();
+  scanT = setInterval(doScan, SCAN_MS);
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  PEER DISCOVERY
-// ═══════════════════════════════════════════════════════════════════
-function scanPeers() {
-  for (let i = 0; i < MAX_SLOTS; i++) {
-    if (i === mySlot) continue;
-    const p = peers[i];
-    if (p && p.dc && p.dc.open) continue; // already connected
-    connectSlot(i);
+function openPeer(id) {
+  return new Promise((resolve, reject) => {
+    const p = new Peer(id, { debug: 0 });
+    let done=false;
+    const fin=(ok,v)=>{ if(!done){ done=true; ok?resolve(v):reject(v); } };
+    p.on('open', ()=>{ peer=p; fin(true); });
+    p.on('error', err=>{ p.destroy(); fin(false, err); });
+    setTimeout(()=>fin(false, new Error('timeout')), 10000);
+  });
+}
+
+// ── PEER HANDLERS (incoming connections) ───────────────────────────────────
+function setupPeerHandlers() {
+  peer.on('connection', dc => {
+    const pid=dc.peer;
+    dc.on('open', ()=>{
+      ensure(pid).dc=dc;
+      trySend(pid,{type:'hello',name:myName,id:myPeerId});
+      callPeer(pid);
+    });
+    dc.on('data',  d=>onMsg(pid,d));
+    dc.on('close', ()=>dropPeer(pid));
+    dc.on('error', ()=>dropPeer(pid));
+  });
+
+  peer.on('call', call=>{
+    call.answer(getSilent());
+    const pid=call.peer;
+    ensure(pid).ic=call;
+    call.on('stream', s=>attachAudio(pid,s));
+    call.on('close', ()=>{ if(conns[pid]) conns[pid].ic=null; });
+  });
+
+  peer.on('disconnected', ()=>{
+    setStatus('RECONNECTING','warn');
+    setTimeout(()=>{ try{ peer.reconnect(); }catch(e){ doReconnect(); } }, 1800);
+  });
+
+  peer.on('error', err=>{
+    if (err.type==='peer-unavailable') return; // rdv slot empty — normal
+    if (err.type==='network' || err.type==='server-error' || err.type==='socket-error') {
+      setStatus('ERROR','err');
+      toast('⚠️ Connection lost — tap RECONNECT');
+    }
+  });
+}
+
+// ── RENDEZVOUS / CHANNEL JOIN ───────────────────────────────────────────────
+async function joinChannel() {
+  const rId = rdvId(myChannel);
+
+  // Try to connect to the rendezvous point (who is already there?)
+  setStatus('JOINING…','warn');
+
+  const existing = await tryConnectRdv(rId);
+
+  if (existing) {
+    // Someone is already rdv holder — they'll send us the peer list
+    setStatus('ONLINE','ok');
+  } else {
+    // Nobody there yet (or stale) — try to claim the rdv slot
+    await tryClaimRdv(rId);
+    setStatus('ONLINE','ok');
   }
 }
 
-function connectSlot(sn) {
-  const id = slotId(roomCode, sn);
-  try {
-    const dc = myPeer.connect(id, { reliable: true });
-    dc.on('open', () => {
-      ensure(sn).dc = dc;
-      trySend(sn, { type: 'hello', name: myName });
-      callSlot(sn, id);
-    });
-    dc.on('data',  d  => onMsg(sn, d));
-    dc.on('close', () => dropPeer(sn));
-    dc.on('error', () => { /* slot empty — silent */ });
-  } catch(e) {}
+function tryConnectRdv(rId) {
+  return new Promise(resolve=>{
+    let done=false;
+    const fin=v=>{ if(!done){ done=v; resolve(v); } };
+
+    try {
+      const dc = peer.connect(rId, { reliable:true });
+      dc.on('open', ()=>{
+        // Connection to rdv succeeded
+        ensure(rId).dc=dc; ensure(rId).isRdv=true;
+        trySend(rId,{type:'hello',name:myName,id:myPeerId});
+        fin(true);
+      });
+      dc.on('data', d=>onMsg(rId,d));
+      dc.on('close',()=>{ dropPeer(rId); tryClaimRdv(rdvId(myChannel)); });
+      dc.on('error',()=>fin(false));
+    } catch(e){ fin(false); }
+
+    setTimeout(()=>fin(false), 4000);
+  });
 }
 
-function callSlot(sn, id) {
-  if (peers[sn] && peers[sn].oc) return;
-  try {
-    const call = myPeer.call(id, getSilent());
-    ensure(sn).oc = call;
-    call.on('stream', s => attachAudio(sn, s));
-    call.on('close',  () => { if (peers[sn]) peers[sn].oc = null; });
-  } catch(e) {}
+async function tryClaimRdv(rId) {
+  // Try to become the rendezvous point
+  if (rdvPeer) { try{ rdvPeer.destroy(); }catch(e){} }
+
+  return new Promise(resolve=>{
+    try {
+      const rp = new Peer(rId, { debug:0 });
+      rp.on('open', ()=>{
+        rdvPeer=rp; iAmRdv=true;
+        // Handle peers connecting to us via rdv
+        rp.on('connection', dc=>{
+          const pid=dc.peer;
+          dc.on('open',()=>{
+            dc.send({type:'peerList', peers: buildPeerList()});
+            // Also forward to everyone else that someone new arrived
+            Object.entries(conns).forEach(([cid,cp])=>{
+              if(cid!==pid && cp.dc && cp.dc.open) {
+                try{ cp.dc.send({type:'newPeer',id:pid}); }catch(e){}
+              }
+            });
+          });
+          dc.on('data', d=>onMsg(pid,d));
+          dc.on('close',()=>dropPeer(pid));
+          dc.on('error',()=>dropPeer(pid));
+        });
+        resolve(true);
+      });
+      rp.on('error', ()=>{ iAmRdv=false; resolve(false); });
+      setTimeout(()=>resolve(false), 5000);
+    } catch(e){ resolve(false); }
+  });
 }
 
-function parseSlot(peerId) {
-  const pfx = `${PREFIX}-${roomCode}-s`;
-  if (!peerId.startsWith(pfx)) return null;
-  const n = parseInt(peerId.slice(pfx.length), 10);
-  return isNaN(n) ? null : n;
+function buildPeerList() {
+  const list=[{id:myPeerId, name:myName}];
+  Object.entries(conns).forEach(([pid,p])=>{ if(p.name) list.push({id:pid,name:p.name}); });
+  return list;
 }
 
-function ensure(sn) {
-  if (!peers[sn]) peers[sn] = {};
-  return peers[sn];
-}
-
-function trySend(sn, data) {
-  try { if (peers[sn] && peers[sn].dc && peers[sn].dc.open) peers[sn].dc.send(data); } catch(e) {}
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  MESSAGING
-// ═══════════════════════════════════════════════════════════════════
-function onMsg(sn, data) {
-  switch (data.type) {
+// ── MESSAGING ──────────────────────────────────────────────────────────────
+function onMsg(fromId, data) {
+  switch(data.type) {
     case 'hello':
-      const isNew = !peers[sn] || !peers[sn].name;
-      ensure(sn).name = data.name;
+      const isNew = !conns[fromId] || !conns[fromId].name;
+      ensure(fromId).name = data.name;
+      if (data.id && data.id !== fromId && data.id !== myPeerId) {
+        // They told us their actual peer ID (may differ from rdv ID)
+        if (!conns[data.id]) {
+          conns[data.id] = conns[fromId] || {};
+          conns[data.id].name = data.name;
+        }
+      }
       if (isNew && data.name) toast(`📡 ${data.name} joined`);
       renderMembers();
       break;
-    case 'tx':
-      const p = ensure(sn);
-      p.speaking = true;
-      clearTimeout(p.speakT);
-      p.speakT = setTimeout(() => { if (peers[sn]) { peers[sn].speaking = false; renderMembers(); } }, 900);
+
+    case 'peerList':
+      // Sent by rdv holder on join — connect to everyone
+      (data.peers||[]).forEach(p=>{
+        if (p.id===myPeerId) return;
+        ensure(p.id).name = p.name;
+        connectToPeer(p.id);
+      });
       renderMembers();
       break;
+
+    case 'newPeer':
+      // Rdv holder broadcasts when someone new connects
+      if (data.id && data.id!==myPeerId && !(conns[data.id]&&conns[data.id].dc&&conns[data.id].dc.open)) {
+        connectToPeer(data.id);
+      }
+      break;
+
+    case 'tx':
+      if (!conns[fromId]) break;
+      conns[fromId].speaking=true;
+      clearTimeout(conns[fromId].speakT);
+      conns[fromId].speakT=setTimeout(()=>{ if(conns[fromId]){conns[fromId].speaking=false;renderMembers();} },900);
+      renderMembers();
+      break;
+
     case 'bye':
-      dropPeer(sn);
+      dropPeer(fromId);
       break;
   }
 }
 
-function dropPeer(sn) {
-  const p = peers[sn];
-  if (p) {
-    if (p.audioEl) { try { p.audioEl.srcObject = null; p.audioEl.remove(); } catch(e){} }
-    try { if (p.oc) p.oc.close(); } catch(e){}
-    try { if (p.ic) p.ic.close(); } catch(e){}
-    if (p.name) toast(`📴 ${p.name} left`);
-    delete peers[sn];
+// ── PEER CONNECTIONS ───────────────────────────────────────────────────────
+function connectToPeer(pid) {
+  if (pid===myPeerId) return;
+  if (conns[pid] && conns[pid].dc && conns[pid].dc.open) return;
+
+  try {
+    const dc = peer.connect(pid, {reliable:true});
+    dc.on('open',()=>{
+      ensure(pid).dc=dc;
+      trySend(pid,{type:'hello',name:myName,id:myPeerId});
+      callPeer(pid);
+    });
+    dc.on('data', d=>onMsg(pid,d));
+    dc.on('close',()=>dropPeer(pid));
+    dc.on('error',()=>dropPeer(pid));
+  } catch(e){}
+}
+
+function callPeer(pid) {
+  if (!peer || conns[pid]&&conns[pid].oc) return;
+  try {
+    const call=peer.call(pid, getSilent());
+    ensure(pid).oc=call;
+    call.on('stream',s=>attachAudio(pid,s));
+    call.on('close',()=>{ if(conns[pid]) conns[pid].oc=null; });
+  } catch(e){}
+}
+
+function doScan() {
+  // Reconnect to any known peers whose DC dropped
+  Object.entries(conns).forEach(([pid,p])=>{
+    if (!p.isRdv && (!p.dc || !p.dc.open)) connectToPeer(pid);
+  });
+  // Try to reclaim rdv if nobody holds it
+  if (!iAmRdv) {
+    tryConnectRdv(rdvId(myChannel)).then(ok=>{
+      if (!ok) tryClaimRdv(rdvId(myChannel));
+    });
   }
-  if (selSlot === sn) { selSlot = null; updateTarget(); }
+}
+
+function ensure(pid) {
+  if (!conns[pid]) conns[pid]={};
+  return conns[pid];
+}
+
+function trySend(pid, data) {
+  try{ if(conns[pid]&&conns[pid].dc&&conns[pid].dc.open) conns[pid].dc.send(data); }catch(e){}
+}
+
+function dropPeer(pid) {
+  const p=conns[pid];
+  if (p) {
+    if(p.audioEl){ try{p.audioEl.srcObject=null;p.audioEl.remove();}catch(e){} }
+    try{if(p.oc)p.oc.close();}catch(e){}
+    try{if(p.ic)p.ic.close();}catch(e){}
+    if(p.name) toast(`📴 ${p.name} left`);
+    delete conns[pid];
+  }
+  if(selPeer===pid){ selPeer=null; updateTarget(); }
   renderMembers();
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  AUDIO
-// ═══════════════════════════════════════════════════════════════════
+// ── RECONNECT ──────────────────────────────────────────────────────────────
+async function doReconnect() {
+  cleanup();
+  setStatus('RECONNECTING','warn');
+  document.getElementById('re-btn').style.display='none';
+  await sleep(500);
+  cancelRequested=false;
+  await connectWithRetry();
+}
+
+function cleanup() {
+  clearInterval(scanT);
+  if(rdvPeer){ try{rdvPeer.destroy();}catch(e){} rdvPeer=null; }
+  if(peer){    try{peer.destroy();   }catch(e){} peer=null;    }
+  iAmRdv=false;
+  Object.entries(conns).forEach(([pid,p])=>{
+    if(p.audioEl){ try{p.audioEl.srcObject=null;p.audioEl.remove();}catch(e){} }
+  });
+  Object.keys(conns).forEach(k=>delete conns[k]);
+}
+
+// ── AUDIO ──────────────────────────────────────────────────────────────────
 function getSilent() {
-  if (silentStream) return silentStream;
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  const dst = ctx.createMediaStreamDestination();
-  const osc = ctx.createOscillator(); osc.frequency.value = 0; osc.connect(dst); osc.start();
-  silentStream = dst.stream; return silentStream;
+  if(silentStream) return silentStream;
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const dst=ctx.createMediaStreamDestination();
+  const osc=ctx.createOscillator(); osc.frequency.value=0; osc.connect(dst); osc.start();
+  silentStream=dst.stream; return silentStream;
 }
 
 async function initAudio() {
   try {
-    localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
     setupAnalyser();
   } catch(e) {
-    toast('⚠️ Mic permission needed — tap 🎙 to retry.');
+    toast('⚠️ Mic access denied — tap 🎙 to request again');
   }
 }
 
 async function ensureMic() {
-  if (localStream) return true;
+  if(localStream) return true;
   try {
-    localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    setupAnalyser();
-    return true;
-  } catch(e) {
-    toast('⚠️ Microphone access denied');
-    return false;
-  }
+    localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    setupAnalyser(); return true;
+  } catch(e) { toast('⚠️ Microphone access denied'); return false; }
 }
 
 function setupAnalyser() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    analyser  = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
+  if(!audioCtx) {
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    analyser=audioCtx.createAnalyser(); analyser.fftSize=256;
   }
-  try { audioCtx.createMediaStreamSource(localStream).connect(analyser); } catch(e){}
-  if (!meterRunning) runMeter();
+  try{ audioCtx.createMediaStreamSource(localStream).connect(analyser); }catch(e){}
+  if(!meterRunning) runMeter();
 }
 
-function attachAudio(sn, stream) {
-  const p = ensure(sn);
-  if (p.audioEl) { try { p.audioEl.srcObject = null; p.audioEl.remove(); } catch(e){} }
-  const a = document.createElement('audio');
-  a.srcObject = stream; a.autoplay = true; a.playsInline = true;
-  document.body.appendChild(a); p.audioEl = a;
+function attachAudio(pid, stream) {
+  const p=ensure(pid);
+  if(p.audioEl){ try{p.audioEl.srcObject=null;p.audioEl.remove();}catch(e){} }
+  const a=document.createElement('audio');
+  a.srcObject=stream; a.autoplay=true; a.playsInline=true;
+  document.body.appendChild(a); p.audioEl=a;
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  PTT
-// ═══════════════════════════════════════════════════════════════════
-function pttDown(e) { e.preventDefault(); if (!talking) startTX(); }
-function pttUp(e)   { e.preventDefault(); if (!voxOn)   stopTX();  }
+// ── PTT ────────────────────────────────────────────────────────────────────
+function pttDown(e){e.preventDefault(); if(!talking) startTX();}
+function pttUp(e){e.preventDefault();   if(!voxOn)   stopTX();}
 
 async function startTX() {
-  if (talking) return;
-  if (!(await ensureMic())) return;
-  talking = true;
+  if(talking) return;
+  if(!(await ensureMic())) return;
+  talking=true;
   document.getElementById('ptt-btn').classList.add('live');
-  document.getElementById('tx-badge').classList.add('on');
-  document.getElementById('ptt-hint').textContent = 'TRANSMITTING…';
+  document.getElementById('txbadge').classList.add('on');
+  document.getElementById('ptt-hint').textContent='TRANSMITTING…';
 
-  const track = localStream.getAudioTracks()[0];
-  Object.entries(peers).forEach(([sn, p]) => {
-    if (selSlot !== null && parseInt(sn) !== selSlot) return;
-    replaceTrack(p.oc, track);
-    replaceTrack(p.ic, track);
+  const track=localStream.getAudioTracks()[0];
+  Object.entries(conns).forEach(([pid,p])=>{
+    if(selPeer!==null && pid!==selPeer) return;
+    replaceTrack(p.oc,track); replaceTrack(p.ic,track);
   });
-  Object.entries(peers).forEach(([sn]) => trySend(parseInt(sn), { type: 'tx' }));
+  Object.keys(conns).forEach(pid=>trySend(pid,{type:'tx'}));
 }
 
 function stopTX() {
-  if (!talking) return;
-  talking = false;
+  if(!talking) return;
+  talking=false;
   document.getElementById('ptt-btn').classList.remove('live');
-  document.getElementById('tx-badge').classList.remove('on');
-  document.getElementById('ptt-hint').textContent = 'HOLD TO TALK';
-  const silent = getSilent().getAudioTracks()[0];
-  Object.values(peers).forEach(p => { replaceTrack(p.oc, silent); replaceTrack(p.ic, silent); });
+  document.getElementById('txbadge').classList.remove('on');
+  document.getElementById('ptt-hint').textContent='HOLD TO TALK';
+  const sil=getSilent().getAudioTracks()[0];
+  Object.values(conns).forEach(p=>{ replaceTrack(p.oc,sil); replaceTrack(p.ic,sil); });
 }
 
-function replaceTrack(call, track) {
-  if (!call || !call.peerConnection || !track) return;
-  const s = call.peerConnection.getSenders().find(s => s.track && s.track.kind === 'audio');
-  if (s) s.replaceTrack(track).catch(() => {});
+function replaceTrack(call,track){
+  if(!call||!call.peerConnection||!track) return;
+  const s=call.peerConnection.getSenders().find(s=>s.track&&s.track.kind==='audio');
+  if(s) s.replaceTrack(track).catch(()=>{});
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  VOX
-// ═══════════════════════════════════════════════════════════════════
-function toggleVox() {
-  voxOn = !voxOn;
-  document.getElementById('vox-card').classList.toggle('on', voxOn);
-  if (voxOn) ensureMic();
-  if (!voxOn && talking) stopTX();
+// ── VOX ────────────────────────────────────────────────────────────────────
+function toggleVox(){
+  voxOn=!voxOn;
+  document.getElementById('vox-card').classList.toggle('on',voxOn);
+  if(voxOn) ensureMic();
+  if(!voxOn&&talking) stopTX();
 }
 
-function runMeter() {
-  meterRunning = true;
-  const data = new Uint8Array(analyser.frequencyBinCount);
-  const VOX  = 30;
-  (function loop() {
+function runMeter(){
+  meterRunning=true;
+  const data=new Uint8Array(analyser.frequencyBinCount);
+  const VOX=28;
+  (function loop(){
     analyser.getByteFrequencyData(data);
-    const avg  = data.slice(0, 48).reduce((a,v) => a+v, 0) / 48;
-    const norm = Math.min(avg / 80, 1);
-    BARS.forEach(b => {
-      b.style.height     = Math.max(2, norm * 16 * (0.35 + Math.random() * 0.75)) + 'px';
-      b.style.background = norm > 0.28 ? 'var(--amber)' : 'var(--border)';
+    const avg=data.slice(0,48).reduce((a,v)=>a+v,0)/48;
+    const norm=Math.min(avg/80,1);
+    BARS.forEach(b=>{
+      b.style.height=Math.max(2,norm*16*(0.35+Math.random()*.75))+'px';
+      b.style.background=norm>.25?'var(--amber)':'var(--border)';
     });
-    if (voxOn) {
-      if (avg > VOX && !talking) { startTX(); }
-      else if (avg <= VOX && talking) { clearTimeout(voxHoldT); voxHoldT = setTimeout(stopTX, 700); }
+    if(voxOn){
+      if(avg>VOX&&!talking) startTX();
+      else if(avg<=VOX&&talking){ clearTimeout(voxHoldT); voxHoldT=setTimeout(stopTX,700); }
     }
     requestAnimationFrame(loop);
   })();
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  UI
-// ═══════════════════════════════════════════════════════════════════
-function setMode(mode) {
-  document.getElementById('tab-grp').className = 'ch-tab' + (mode==='group' ? ' active' : '');
-  document.getElementById('tab-ind').className = 'ch-tab' + (mode==='individual' ? ' active' : '');
-  if (mode === 'group') { selSlot = null; document.getElementById('ptt-target').textContent = '📢 ALL MEMBERS'; }
+// ── UI ─────────────────────────────────────────────────────────────────────
+function setMode(mode){
+  document.getElementById('tab-grp').className='ch-tab'+(mode==='group'?' active':'');
+  document.getElementById('tab-ind').className='ch-tab'+(mode==='individual'?' active':'');
+  if(mode==='group'){ selPeer=null; document.getElementById('ptt-tgt').textContent='📢 ALL MEMBERS'; }
   else updateTarget();
   renderMembers();
 }
 
-function selectMember(sn) {
-  if (!document.getElementById('tab-ind').classList.contains('active')) return;
-  selSlot = sn; updateTarget(); renderMembers();
+function selectMember(pid){
+  if(!document.getElementById('tab-ind').classList.contains('active')) return;
+  selPeer=pid; updateTarget(); renderMembers();
 }
 
-function updateTarget() {
-  if (!document.getElementById('tab-ind').classList.contains('active')) return;
-  document.getElementById('ptt-target').textContent =
-    (selSlot !== null && peers[selSlot] && peers[selSlot].name)
-      ? `👤 ${esc(peers[selSlot].name)}`
+function updateTarget(){
+  if(!document.getElementById('tab-ind').classList.contains('active')) return;
+  document.getElementById('ptt-tgt').textContent =
+    (selPeer&&conns[selPeer]&&conns[selPeer].name)
+      ? `👤 ${esc(conns[selPeer].name)}`
       : '👆 Tap a member below';
 }
 
-function renderMembers() {
-  const indMode = document.getElementById('tab-ind').classList.contains('active');
-  const named   = Object.entries(peers).filter(([,p]) => p.name);
-  document.getElementById('m-count').textContent = `${named.length + 1} online`;
+function renderMembers(){
+  const indMode=document.getElementById('tab-ind').classList.contains('active');
+  const named=Object.entries(conns).filter(([,p])=>p.name&&!p.isRdv);
+  // Deduplicate by name in case rdv + direct connections overlap
+  const seen=new Set(); const unique=named.filter(([pid,p])=>{
+    const k=p.name; if(seen.has(k)) return false; seen.add(k); return true;
+  });
 
-  let html = `<div class="member-row">
-    <div class="avatar">${esc(myName[0]||'?').toUpperCase()}<div class="av-ring"></div></div>
-    <div class="m-name">${esc(myName)}</div>
-    <span class="m-tag">YOU · S${mySlot+1}</span>
+  document.getElementById('mcnt').textContent=`${unique.length+1} online`;
+
+  let html=`<div class="mrow">
+    <div class="av">${esc(myName[0]||'?').toUpperCase()}<div class="avr"></div></div>
+    <div class="mn">${esc(myName)}</div>
+    <span class="mtag">YOU</span>
   </div>`;
 
-  if (!named.length) {
-    html += `<div class="empty-state">No one else yet.<br>Share the channel name:<br><strong>${esc(roomCode)}</strong></div>`;
+  if(!unique.length){
+    html+=`<div class="empty">Nobody else yet.<br>Share your channel:<br><strong>${esc(myChannel)}</strong></div>`;
   } else {
-    named.forEach(([sn, p]) => {
-      const isn = parseInt(sn), sel = isn === selSlot;
-      html += `<div class="member-row${sel?' sel':''}${p.speaking?' tx':''}" onclick="selectMember(${isn})">
-        <div class="avatar">${esc((p.name||'?')[0]).toUpperCase()}<div class="av-ring"></div></div>
-        <div class="m-name">${esc(p.name)}</div>
-        ${p.speaking ? '<span class="m-tx">◉ TX</span>'
-          : (indMode && sel ? '<span class="m-tag">SELECTED</span>' : `<span class="m-tag">S${isn+1}</span>`)}
+    unique.forEach(([pid,p])=>{
+      const sel=pid===selPeer;
+      html+=`<div class="mrow${sel?' sel':''}${p.speaking?' tx':''}" onclick="selectMember('${pid}')">
+        <div class="av">${esc((p.name||'?')[0]).toUpperCase()}<div class="avr"></div></div>
+        <div class="mn">${esc(p.name)}</div>
+        ${p.speaking?'<span class="mtx">◉ TX</span>'
+          :(indMode&&sel?'<span class="mtag">SELECTED</span>':'<span class="mtag">ONLINE</span>')}
       </div>`;
     });
   }
-  document.getElementById('m-list').innerHTML = html;
+  document.getElementById('mlist').innerHTML=html;
 }
 
-function copyLink() {
-  const url = `${location.origin}${location.pathname}?ch=${encodeURIComponent(roomCode)}`;
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = document.getElementById('copy-btn');
-    btn.textContent = '✅ Copied!'; btn.classList.add('ok');
-    setTimeout(() => { btn.innerHTML = '📋 Invite'; btn.classList.remove('ok'); }, 2200);
-  }).catch(() => toast(`Channel name: ${roomCode}`));
+function copyInvite(){
+  const url=`${location.origin}${location.pathname}?ch=${encodeURIComponent(myChannel)}`;
+  navigator.clipboard.writeText(url).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    btn.textContent='✅ Copied!'; btn.classList.add('ok');
+    setTimeout(()=>{ btn.innerHTML='📋 Invite'; btn.classList.remove('ok'); },2200);
+  }).catch(()=>toast(`Channel: ${myChannel}`));
 }
 
-// ═══════════════════════════════════════════════════════════════════
-//  CLEANUP
-// ═══════════════════════════════════════════════════════════════════
-window.addEventListener('beforeunload', () => {
-  clearInterval(scanInterval);
-  Object.entries(peers).forEach(([sn]) => trySend(parseInt(sn), { type:'bye' }));
-  if (myPeer) try { myPeer.destroy(); } catch(e){}
-  if (localStream) localStream.getTracks().forEach(t => t.stop());
-  if (audioCtx) try { audioCtx.close(); } catch(e){}
+// ── CLEANUP ────────────────────────────────────────────────────────────────
+window.addEventListener('beforeunload',()=>{
+  Object.keys(conns).forEach(pid=>trySend(pid,{type:'bye'}));
+  cleanup();
+  if(localStream) localStream.getTracks().forEach(t=>t.stop());
+  if(audioCtx) try{audioCtx.close();}catch(e){}
 });
 
-// ═══════════════════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════════════════
-(function init() {
+// ── INIT ───────────────────────────────────────────────────────────────────
+(function init(){
   loadSaved();
-  const ch = new URLSearchParams(location.search).get('ch');
-  if (ch) {
-    document.getElementById('ch-input').value = decodeURIComponent(ch).toLowerCase();
+  const ch=new URLSearchParams(location.search).get('ch');
+  if(ch){
+    document.getElementById('ch-inp').value=decodeURIComponent(ch).toLowerCase();
     toast('📡 Channel loaded — enter your name and join!');
   }
 })();
