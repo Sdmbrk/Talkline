@@ -1,2 +1,2 @@
-# Talkline
-Virtual Walkie Talkie
+# Translator
+Translator
