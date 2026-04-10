@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#080a0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AR→EN">
 <title>Arabic → English Live</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -14,21 +12,22 @@
 :root{
   --bg:#080a0d;--card:#0f1218;--border:#1c2130;
   --gold:#d4a853;--blue:#5ba3c9;--green:#3dd68c;
-  --red:#e05c5c;--text:#e6e0d6;--dim:#3a4255;--muted:#1a1f2a;
+  --red:#e05c5c;--text:#e6e0d6;--dim:#3a4255;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Sora',sans-serif}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;overflow:hidden}
 body::before{content:'';position:fixed;inset:0;
   background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(212,168,83,.07),transparent 60%),
              radial-gradient(ellipse 50% 40% at 90% 100%,rgba(91,163,201,.06),transparent 60%);
   pointer-events:none;z-index:0}
-.app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;
-  padding:env(safe-area-inset-top,14px) 0 env(safe-area-inset-bottom,0)}
 
-/* TOP BAR */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 8px;flex-shrink:0}
-.brand h1{font-size:16px;font-weight:700;color:var(--gold);letter-spacing:-.3px}
-.brand .ar{font-family:'Noto Naskh Arabic',serif;font-size:11px;color:var(--blue);direction:rtl;margin-top:2px}
-.badge{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;
+.app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;
+  max-width:480px;margin:0 auto;padding:env(safe-area-inset-top,14px) 0 env(safe-area-inset-bottom,0)}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;flex-shrink:0}
+.brand h1{font-size:16px;font-weight:700;color:var(--gold)}
+.brand .ar{font-family:'Noto Naskh Arabic',serif;font-size:11px;color:var(--blue);direction:rtl;margin-top:1px}
+.badge{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;
   border:1px solid var(--border);background:var(--card);font-size:9px;font-weight:700;
   letter-spacing:1.5px;color:var(--dim);transition:all .3s;white-space:nowrap}
 .badge.on{border-color:rgba(61,214,140,.45);color:var(--green)}
@@ -39,24 +38,34 @@ body::before{content:'';position:fixed;inset:0;
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* VIZ */
-.viz-wrap{margin:2px 18px 6px;background:var(--card);border:1px solid var(--border);
+.viz-wrap{margin:2px 16px 6px;background:var(--card);border:1px solid var(--border);
   border-radius:14px;padding:10px 12px 8px;flex-shrink:0}
-.bars{display:flex;align-items:center;gap:2px;height:26px;margin-bottom:7px}
+.bars{display:flex;align-items:center;gap:2px;height:24px;margin-bottom:6px}
 .b{flex:1;border-radius:2px;background:var(--blue);opacity:.18;height:3px;transition:height .06s,opacity .06s}
 .b.on{opacity:.8}
 .ar-live{font-family:'Noto Naskh Arabic',serif;font-size:15px;direction:rtl;text-align:right;
-  color:rgba(212,168,83,.7);min-height:22px;line-height:1.5;word-break:break-word;
-  max-height:52px;overflow:hidden}
+  color:rgba(212,168,83,.75);min-height:22px;line-height:1.5;word-break:break-word;max-height:48px;overflow:hidden}
+
+/* DEBUG LOG - visible on screen */
+.debug-wrap{margin:0 16px 6px;flex-shrink:0}
+.debug-box{background:#0a1a0a;border:1px solid #1a3a1a;border-radius:10px;
+  padding:8px 10px;max-height:80px;overflow-y:auto;font-family:monospace;font-size:10px;
+  color:#4ade80;line-height:1.6}
+.debug-box::-webkit-scrollbar{display:none}
+.dl{color:#4ade80}
+.dl.warn{color:#fbbf24}
+.dl.err{color:#f87171}
+.dl.info{color:#60a5fa}
 
 /* TRANSLATION */
-.trans-wrap{flex:1;margin:0 18px 6px;background:var(--card);border:1px solid var(--border);
+.trans-wrap{flex:1;margin:0 16px 6px;background:var(--card);border:1px solid var(--border);
   border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .panel-hd{display:flex;align-items:center;justify-content:space-between;
   padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
-.panel-hd .lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
-.chip-en{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:5px;
+.lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.chip{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:5px;
   background:rgba(212,168,83,.12);color:var(--gold)}
-.trans-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 10px}
+.trans-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 12px 10px}
 .trans-scroll::-webkit-scrollbar{display:none}
 #trans-text{font-size:20px;font-weight:300;line-height:1.65;color:var(--text);word-break:break-word;min-height:60px}
 .ph{font-size:14px;color:var(--dim);font-weight:300}
@@ -66,36 +75,34 @@ body::before{content:'';position:fixed;inset:0;
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
 /* HISTORY */
-.hist-wrap{margin:0 18px 6px;background:var(--card);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;flex-shrink:0;max-height:26vh;display:flex;flex-direction:column}
+.hist-wrap{margin:0 16px 6px;background:var(--card);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;flex-shrink:0;max-height:22vh;display:flex;flex-direction:column}
 .hist-hd{display:flex;align-items:center;justify-content:space-between;
   padding:7px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
-.hist-hd .lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
 .clr-btn{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:5px;
   background:rgba(91,163,201,.1);color:var(--blue);cursor:pointer;border:none;font-family:'Sora',sans-serif}
 .hist-list{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1}
 .hist-list::-webkit-scrollbar{display:none}
-.hi{padding:8px 12px;border-bottom:1px solid var(--border);animation:fadeUp .3s ease}
+.hi{padding:7px 12px;border-bottom:1px solid var(--border)}
 .hi:last-child{border-bottom:none}
-.hi-ar{font-family:'Noto Naskh Arabic',serif;font-size:12px;direction:rtl;text-align:right;
-  color:var(--blue);line-height:1.5;margin-bottom:2px}
+.hi-ar{font-family:'Noto Naskh Arabic',serif;font-size:12px;direction:rtl;text-align:right;color:var(--blue);line-height:1.5;margin-bottom:2px}
 .hi-en{font-size:11px;color:var(--text);line-height:1.45;opacity:.8}
-.hi-empty{padding:14px;font-size:11px;color:var(--dim);text-align:center}
+.hi-empty{padding:12px;font-size:11px;color:var(--dim);text-align:center}
 
 /* CONTROLS */
-.controls{flex-shrink:0;padding:4px 18px calc(env(safe-area-inset-bottom,0px) + 10px);display:flex;gap:10px}
-.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
-  padding:13px 10px;border-radius:13px;border:none;font-family:'Sora',sans-serif;
+.controls{flex-shrink:0;padding:4px 16px calc(env(safe-area-inset-bottom,0px) + 8px);display:flex;gap:8px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:13px 8px;border-radius:13px;border:none;font-family:'Sora',sans-serif;
   font-size:13px;font-weight:600;cursor:pointer;-webkit-appearance:none;transition:transform .15s}
 .btn:active{transform:scale(.95)}
 .btn-go{background:linear-gradient(135deg,#1d5c3a,#3dd68c18);border:1px solid rgba(61,214,140,.4);color:var(--green)}
 .btn-stop{background:linear-gradient(135deg,#5c1d1d,#e05c5c18);border:1px solid rgba(224,92,92,.4);color:var(--red);display:none}
-.btn-clr{flex:0 0 46px;background:var(--muted);border:1px solid var(--border);color:var(--dim);border-radius:13px}
-.btn-clr:active{color:var(--gold);border-color:var(--gold)}
-.err-bar{display:none;margin:0 18px 6px;padding:9px 12px;
+.btn-clr{flex:0 0 46px;background:#0f1218;border:1px solid var(--border);color:var(--dim);border-radius:13px}
+
+.err-bar{display:none;margin:0 16px 6px;padding:9px 12px;
   background:rgba(224,92,92,.08);border:1px solid rgba(224,92,92,.25);
   border-radius:10px;font-size:11px;color:var(--red);line-height:1.5;flex-shrink:0}
-.foot{text-align:center;font-size:9px;letter-spacing:2px;color:#1e2535;padding:2px 0 3px;flex-shrink:0}
+.foot{text-align:center;font-size:9px;letter-spacing:2px;color:#1e2535;padding:1px 0 3px;flex-shrink:0}
 .foot b{color:rgba(212,168,83,.35)}
 </style>
 </head>
@@ -115,10 +122,17 @@ body::before{content:'';position:fixed;inset:0;
     <div class="ar-live" id="ar-live">…</div>
   </div>
 
+  <!-- DEBUG LOG - shows what's happening in real time -->
+  <div class="debug-wrap">
+    <div class="debug-box" id="debug-box">
+      <div class="dl info">[ Debug log — tap Start Listening ]</div>
+    </div>
+  </div>
+
   <div class="trans-wrap">
     <div class="panel-hd">
       <span class="lbl">Live Translation</span>
-      <span class="chip-en">EN</span>
+      <span class="chip">EN</span>
     </div>
     <div class="trans-scroll" id="trans-scroll">
       <div id="trans-text"><span class="ph">Speak Arabic — translation streams here…</span></div>
@@ -145,175 +159,193 @@ body::before{content:'';position:fixed;inset:0;
 </div>
 
 <script>
-// ── BARS ─────────────────────────────────────────────────────────
-const barsEl = document.getElementById('bars');
-const BC = 52;
-const barEls = Array.from({length:BC},()=>{const b=document.createElement('div');b.className='b';barsEl.appendChild(b);return b;});
-let audioCtx,analyser,micStream,raf;
+// ── DEBUG LOG ─────────────────────────────────────────────────────
+const debugBox = document.getElementById('debug-box');
+function log(msg, type='') {
+  const d = document.createElement('div');
+  d.className = 'dl' + (type ? ' '+type : '');
+  d.textContent = new Date().toLocaleTimeString('en',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'}) + ' ' + msg;
+  debugBox.appendChild(d);
+  debugBox.scrollTop = debugBox.scrollHeight;
+  // keep max 30 lines
+  while (debugBox.children.length > 30) debugBox.removeChild(debugBox.firstChild);
+}
 
-async function startViz(){
-  try{
-    micStream=await navigator.mediaDevices.getUserMedia({audio:true});
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    const src=audioCtx.createMediaStreamSource(micStream);
-    analyser=audioCtx.createAnalyser();analyser.fftSize=128;
-    src.connect(analyser);drawBars();
-  }catch(e){}
+// ── BARS ──────────────────────────────────────────────────────────
+const barsEl = document.getElementById('bars');
+const BC = 48;
+const barEls = Array.from({length:BC}, () => {
+  const b = document.createElement('div'); b.className='b';
+  barsEl.appendChild(b); return b;
+});
+let audioCtx, analyser, micStream, raf;
+
+async function startViz() {
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({audio:true});
+    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const src = audioCtx.createMediaStreamSource(micStream);
+    analyser = audioCtx.createAnalyser(); analyser.fftSize = 128;
+    src.connect(analyser); drawBars();
+    log('Mic access OK ✓', 'info');
+  } catch(e) { log('Mic viz error: '+e.message, 'warn'); }
 }
-function drawBars(){
-  raf=requestAnimationFrame(drawBars);
-  if(!analyser)return;
-  const d=new Uint8Array(analyser.frequencyBinCount);
+function drawBars() {
+  raf = requestAnimationFrame(drawBars);
+  if (!analyser) return;
+  const d = new Uint8Array(analyser.frequencyBinCount);
   analyser.getByteFrequencyData(d);
-  barEls.forEach((b,i)=>{const v=d[Math.floor(i*d.length/BC)]||0;b.style.height=Math.max(3,(v/255)*24)+'px';b.classList.toggle('on',v>15);});
+  barEls.forEach((b,i) => {
+    const v = d[Math.floor(i*d.length/BC)]||0;
+    b.style.height = Math.max(3,(v/255)*22)+'px';
+    b.classList.toggle('on', v>15);
+  });
 }
-function stopViz(){
+function stopViz() {
   cancelAnimationFrame(raf);
-  barEls.forEach(b=>{b.style.height='3px';b.classList.remove('on');});
-  if(micStream)micStream.getTracks().forEach(t=>t.stop());
-  if(audioCtx)audioCtx.close().catch(()=>{});
-  audioCtx=analyser=micStream=null;
+  barEls.forEach(b => {b.style.height='3px'; b.classList.remove('on');});
+  if (micStream) micStream.getTracks().forEach(t=>t.stop());
+  if (audioCtx) audioCtx.close().catch(()=>{});
+  audioCtx = analyser = micStream = null;
 }
 
 // ── STATE ─────────────────────────────────────────────────────────
-let recognition=null, isListening=false;
-let history=[];
-let debounceTimer=null;
-let isTranslating=false;
-let lastSentArabic='';
-let pendingArabic='';
-let fullFinal='';   // accumulated final results this session
-const DEBOUNCE=800; // ms after last speech change → fire translation
+let recognition = null, isListening = false;
+let history = [];
+let debTimer = null, isTranslating = false;
+let lastSent = '', pending = '', fullFinal = '';
+const DEB = 900;
 
 // ── UI ────────────────────────────────────────────────────────────
-function badge(type,txt){
-  const b=document.getElementById('badge');
-  b.className='badge'+(type?' '+type:'');
-  document.getElementById('badge-txt').textContent=txt;
+function badge(type, txt) {
+  const b = document.getElementById('badge');
+  b.className = 'badge'+(type?' '+type:'');
+  document.getElementById('badge-txt').textContent = txt;
 }
-function setAr(t){document.getElementById('ar-live').textContent=t||'…';}
-function setEn(t,anim){
-  const el=document.getElementById('trans-text');
-  if(!t){el.innerHTML='<span class="ph">Speak Arabic — translation streams here…</span>';return;}
-  el.innerHTML=(anim?`<span style="animation:fadeUp .35s ease">`:`<span>`)+t+'</span><span class="cursor"></span>';
-  const sc=document.getElementById('trans-scroll');
-  sc.scrollTop=sc.scrollHeight;
+function setAr(t) { document.getElementById('ar-live').textContent = t||'…'; }
+function setEn(t) {
+  const el = document.getElementById('trans-text');
+  if (!t) { el.innerHTML='<span class="ph">Speak Arabic — translation streams here…</span>'; return; }
+  el.innerHTML = `<span style="animation:fadeUp .35s ease">${t}</span><span class="cursor"></span>`;
+  document.getElementById('trans-scroll').scrollTop = 9999;
 }
-function showErr(m){const e=document.getElementById('err-bar');e.textContent=m;e.style.display=m?'block':'none';}
-function clearHist(){history=[];document.getElementById('hist-list').innerHTML='<div class="hi-empty">No phrases yet</div>';}
-function clearAll(){clearHist();setEn('');setAr('');fullFinal='';lastSentArabic='';pendingArabic='';}
-function pushHistory(ar,en){
+function showErr(m) { const e=document.getElementById('err-bar'); e.textContent=m; e.style.display=m?'block':'none'; }
+function clearHist() { history=[]; document.getElementById('hist-list').innerHTML='<div class="hi-empty">No phrases yet</div>'; }
+function clearAll() { clearHist(); setEn(''); setAr(''); fullFinal=''; lastSent=''; pending=''; debugBox.innerHTML='<div class="dl info">[ Cleared ]</div>'; }
+function pushHist(ar, en) {
   history.unshift({ar,en});
-  document.getElementById('hist-list').innerHTML=history.slice(0,30).map(h=>
+  document.getElementById('hist-list').innerHTML = history.slice(0,20).map(h =>
     `<div class="hi"><div class="hi-ar">${h.ar}</div><div class="hi-en">${h.en}</div></div>`
   ).join('');
 }
 
-// ── TRANSLATE ─────────────────────────────────────────────────────
-async function callTranslate(arabicText){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:600,
-      system:'You are a real-time Arabic-to-English interpreter. Translate the Arabic text to natural fluent English. Output ONLY the English translation — nothing else.',
-      messages:[{role:'user',content:arabicText}]
+// ── TRANSLATE API ─────────────────────────────────────────────────
+async function callAPI(arabic) {
+  log('→ API call: "'+arabic.slice(0,30)+(arabic.length>30?'…':'')+'"', 'info');
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 600,
+      system: 'You are a real-time Arabic-to-English interpreter. Translate the Arabic input to natural fluent English. Output ONLY the English translation — no explanation, no notes, no Arabic.',
+      messages: [{role:'user', content: arabic}]
     })
   });
-  const data=await res.json();
-  return data?.content?.[0]?.text?.trim()||null;
-}
-
-// Main translation loop — debounced so it fires 800ms after speech pauses
-function scheduleTranslate(arabic){
-  pendingArabic=arabic;
-  clearTimeout(debounceTimer);
-  debounceTimer=setTimeout(()=>fireTranslate(arabic), DEBOUNCE);
-}
-
-async function fireTranslate(arabic){
-  if(!arabic||arabic===lastSentArabic)return;
-  if(isTranslating){
-    // Will retry after current finishes
-    return;
+  if (!res.ok) {
+    const txt = await res.text();
+    log('API HTTP '+res.status+': '+txt.slice(0,80), 'err');
+    throw new Error('HTTP '+res.status);
   }
-  isTranslating=true;
-  lastSentArabic=arabic;
+  const data = await res.json();
+  log('API response type: '+(data?.content?.[0]?.type||'unknown'), 'info');
+  const eng = data?.content?.[0]?.text?.trim();
+  if (!eng) { log('API returned empty text', 'warn'); return null; }
+  log('← Translation: "'+eng.slice(0,40)+(eng.length>40?'…':'')+'"');
+  return eng;
+}
+
+function schedule(arabic) {
+  pending = arabic;
+  clearTimeout(debTimer);
+  debTimer = setTimeout(() => fire(arabic), DEB);
+}
+
+async function fire(arabic) {
+  if (!arabic || arabic === lastSent) { log('Skip (same as last)', 'warn'); return; }
+  if (isTranslating) { log('Busy — will retry after', 'warn'); return; }
+  isTranslating = true;
+  lastSent = arabic;
   badge('busy','TRANSLATING');
-  try{
-    const eng=await callTranslate(arabic);
-    if(eng){
-      setEn(eng, true);
-    }
-    if(isListening) badge('on','LISTENING');
-  }catch(e){
-    showErr('Translation error — check connection.');
+  try {
+    const eng = await callAPI(arabic);
+    if (eng) setEn(eng);
+    if (isListening) badge('on','LISTENING');
+  } catch(e) {
+    log('Translate error: '+e.message, 'err');
+    showErr('Translation error — check internet.');
     badge('err','ERROR');
-  }finally{
-    isTranslating=false;
-    // If new speech came while we were busy, translate it now
-    if(pendingArabic && pendingArabic!==lastSentArabic){
-      fireTranslate(pendingArabic);
-    }
+  } finally {
+    isTranslating = false;
+    if (pending !== lastSent) fire(pending);
   }
 }
 
 // ── SPEECH RECOGNITION ───────────────────────────────────────────
-function buildRec(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR)return null;
-  const r=new SR();
-  r.lang='ar-SA';
-  r.continuous=true;
-  r.interimResults=true;
-  r.maxAlternatives=1;
+function buildRec() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { log('SpeechRecognition NOT available in this browser!', 'err'); return null; }
+  log('SpeechRecognition API: OK ✓', 'info');
 
-  r.onstart=()=>{badge('on','LISTENING');showErr('');};
-  r.onend=()=>{if(isListening)setTimeout(()=>{try{r.start();}catch(e){}},200);};
-  r.onerror=(e)=>{
-    if(e.error==='no-speech')return;
-    if(e.error==='not-allowed'||e.error==='denied'){
-      showErr('Mic denied. Tap the lock/mic icon in your browser bar → Allow microphone → try again.');
-      badge('err','MIC DENIED');stopListening();return;
+  const r = new SR();
+  r.lang = 'ar-SA';
+  r.continuous = true;
+  r.interimResults = true;
+  r.maxAlternatives = 1;
+
+  r.onstart = () => {
+    log('Recognition started ✓ lang=ar-SA continuous=true');
+    badge('on','LISTENING'); showErr('');
+  };
+  r.onend = () => {
+    log('Recognition ended — restarting...', 'warn');
+    if (isListening) setTimeout(() => { try { r.start(); log('Restarted ✓'); } catch(e){ log('Restart fail: '+e.message,'err'); } }, 300);
+  };
+  r.onerror = (e) => {
+    log('SR error: '+e.error, 'err');
+    if (e.error==='not-allowed'||e.error==='denied') {
+      showErr('Microphone denied. Tap the lock icon in the address bar → Allow microphone → tap Start again.');
+      badge('err','MIC DENIED'); stopListening();
     }
   };
+  r.onsoundstart = () => log('Sound detected 🔊');
+  r.onspeechstart = () => log('Speech detected 🗣');
+  r.onspeechend = () => log('Speech ended');
+  r.onnomatch = () => log('No match found', 'warn');
 
-  r.onresult=(event)=>{
-    let interim='';
-    let newFinals='';
-
-    for(let i=event.resultIndex;i<event.results.length;i++){
-      const t=event.results[i][0].transcript;
-      if(event.results[i].isFinal){
-        newFinals+=t+' ';
+  r.onresult = (event) => {
+    let interim = '', newFinal = '';
+    log('onresult fired — '+event.results.length+' result(s)');
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const t = event.results[i][0].transcript;
+      const conf = event.results[i][0].confidence;
+      if (event.results[i].isFinal) {
+        newFinal += t + ' ';
+        log('FINAL: "'+t+'" conf='+conf.toFixed(2));
       } else {
-        interim+=t;
+        interim += t;
+        log('interim: "'+t+'"');
       }
     }
+    if (newFinal.trim()) fullFinal += (fullFinal?' ':'')+newFinal.trim();
+    const combined = (fullFinal+(interim?' '+interim:'')).trim();
+    if (combined) { setAr(combined); schedule(combined); }
 
-    // Accumulate finals
-    if(newFinals.trim()){
-      fullFinal+=(fullFinal?' ':'')+newFinals.trim();
-    }
-
-    // Current display = everything confirmed + what's being said right now
-    const combined=(fullFinal+(interim?' '+interim:'')).trim();
-
-    if(combined){
-      setAr(combined);
-      // Fire translation — debounce keeps it from hammering the API
-      scheduleTranslate(combined);
-    }
-
-    // When a final chunk completes, save to history (async, non-blocking)
-    if(newFinals.trim()){
-      const chunk=newFinals.trim();
-      (async()=>{
-        try{
-          const eng=await callTranslate(chunk);
-          if(eng) pushHistory(chunk, eng);
-        }catch(e){}
+    // Push completed sentence to history
+    if (newFinal.trim()) {
+      const chunk = newFinal.trim();
+      (async () => {
+        try { const eng = await callAPI(chunk); if (eng) pushHist(chunk, eng); } catch(e) {}
       })();
     }
   };
@@ -321,26 +353,30 @@ function buildRec(){
   return r;
 }
 
-function startListening(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showErr('Use Chrome on Android or Safari on iPhone.');badge('err','NOT SUPPORTED');return;}
-  fullFinal=''; lastSentArabic=''; pendingArabic='';
-  isListening=true;
-  recognition=buildRec();
-  try{recognition.start();}catch(e){}
+function startListening() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    showErr('Speech Recognition not supported. Please use Chrome on Android or Safari on iPhone.');
+    badge('err','NOT SUPPORTED'); return;
+  }
+  fullFinal=''; lastSent=''; pending='';
+  isListening = true;
+  recognition = buildRec();
+  try { recognition.start(); } catch(e) { log('Start error: '+e.message,'err'); }
   startViz();
-  document.getElementById('btn-go').style.display='none';
-  document.getElementById('btn-stop').style.display='flex';
+  document.getElementById('btn-go').style.display = 'none';
+  document.getElementById('btn-stop').style.display = 'flex';
 }
 
-function stopListening(){
-  isListening=false;
-  clearTimeout(debounceTimer);
-  if(recognition){try{recognition.stop();}catch(e){}recognition=null;}
+function stopListening() {
+  isListening = false;
+  clearTimeout(debTimer);
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
   stopViz();
   badge('','IDLE');
-  document.getElementById('btn-go').style.display='flex';
-  document.getElementById('btn-stop').style.display='none';
+  document.getElementById('btn-go').style.display = 'flex';
+  document.getElementById('btn-stop').style.display = 'none';
+  log('Stopped.');
 }
 </script>
 </body>
